@@ -18,15 +18,15 @@ class fkcorreiosg2 extends CarrierModule {
 
         $this->name     = 'fkcorreiosg2';
         $this->tab      = 'shipping_logistics';
-        $this->version  = '1.2.2';
-        $this->author   = 'módulosFK';
+        $this->version  = '1.3';
+        $this->author   = 'módulosFK & Glauber Portella';
 
         $this->bootstrap = true;
 
         parent::__construct();
 
-        $this->displayName = $this->l('FKcorreios - Geração 2');
-        $this->description = $this->l('Oferece aos clientes diversos meios para envio dos produtos.');
+        $this->displayName = $this->l('FKcorreios - PS 1.7');
+        $this->description = $this->l('Oferece aos clientes diversos meios para envio dos produtos. Módulo FKCorreios G2 portado para Prestashop 1.7');
 
         // Array com nome das classes do menu
         $this->_tabClassName['principal'] = array('className' => 'AdminFKcorreiosg2', 'name' => 'FKcorreios-G2');
@@ -376,7 +376,7 @@ class fkcorreiosg2 extends CarrierModule {
             return false;
         }
 
-        return $this->display(__FILE__, 'views/front/simuladorBoxAdicCarrinho.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorBoxAdicCarrinho.tpl');
     }
 
     public function hookdisplayFooterProduct($params) {
@@ -385,7 +385,7 @@ class fkcorreiosg2 extends CarrierModule {
             return false;
         }
 
-        return $this->display(__FILE__, 'views/front/simuladorAposDescDetalhada.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorAposDescDetalhada.tpl')
 
     }
 
@@ -395,7 +395,7 @@ class fkcorreiosg2 extends CarrierModule {
             return false;
         }
 
-        return $this->display(__FILE__, 'views/front/simuladorCarrinho.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorCarrinho.tpl');
 
     }
 
@@ -409,7 +409,7 @@ class fkcorreiosg2 extends CarrierModule {
         // Grava dados no smarty
         $this->gravaDadosSmartyRastreio();
 
-        return $this->display(__FILE__, 'views/front/rastreioColLeft.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/rastreioColLeft.tpl');
     }
 
     public function hookdisplayRightColumn($params) {
@@ -422,7 +422,7 @@ class fkcorreiosg2 extends CarrierModule {
         // Grava dados no smarty
         $this->gravaDadosSmartyRastreio();
 
-        return $this->display(__FILE__, 'views/front/rastreioColRight.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/rastreioColRight.tpl');
     }
 
     public function hookdisplayFooter($params) {
@@ -435,7 +435,7 @@ class fkcorreiosg2 extends CarrierModule {
         // Grava dados no smarty
         $this->gravaDadosSmartyRastreio();
 
-        return $this->display(__FILE__, 'views/front/rastreioFooter.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/rastreioFooter.tpl');
     }
 
     public function hookdisplayCustomerAccount($params) {
@@ -448,7 +448,7 @@ class fkcorreiosg2 extends CarrierModule {
         // Grava dados no smarty
         $this->gravaDadosSmartyRastreio();
 
-        return $this->display(__FILE__, 'views/front/rastreioAccount.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/rastreioAccount.tpl');
     }
 
     public function getContent() {
@@ -497,7 +497,7 @@ class fkcorreiosg2 extends CarrierModule {
 
         ));
 
-        return $this->display(__FILE__, 'views/config/mainConfig.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/config/mainConfig.tpl');
     }
 
     private function configGeral() {
