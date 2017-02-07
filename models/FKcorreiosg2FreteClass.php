@@ -87,25 +87,25 @@ class FKcorreiosg2FreteClass {
             // Cria array de produtos
             if ($origem == 'produto') {
                 // Calcula cubagem
-                $cubagem = $params['product']->height * $params['product']->width * $params['product']->depth;
+                $cubagem = $params['product']['height'] * $params['product']['width'] * $params['product']['depth'];
 
                 // Calcula valor do produto
-                $preco = $params['product']->price;
-                $impostos = $params['product']->tax_rate;
+                $preco = $params['product']['price'];
+                $impostos = $params['product']['tax_rate'];
                 $valorProduto = $preco * (1 + ($impostos / 100));
 
                 // Recupera o peso do pedido
-                $pesoPedido = $params['product']->weight;
+                $pesoPedido = $params['product']['weight'];
 
                 $produtos[] = array(
-                    'id'                            => $params['product']->id,
-                    'altura'                        => $params['product']->height,
-                    'largura'                       => $params['product']->width,
-                    'comprimento'                   => $params['product']->depth,
-                    'peso'                          => $params['product']->weight,
+                    'id'                            => $params['product']['id'],
+                    'altura'                        => $params['product']['height'],
+                    'largura'                       => $params['product']['width'],
+                    'comprimento'                   => $params['product']['depth'],
+                    'peso'                          => $params['product']['weight'],
                     'cubagem'                       => $cubagem,
                     'valorProduto'                  => $valorProduto,
-                    'adicionalEnvio'                => $params['product']->additional_shipping_cost,
+                    'adicionalEnvio'                => $params['product']['additional_shipping_cost'],
                     'freteGratisProduto'            => false,
                 );
             }else {

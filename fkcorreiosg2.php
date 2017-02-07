@@ -375,7 +375,7 @@ class fkcorreiosg2 extends CarrierModule {
         if (!$this->processaSimulador('produto', '2', $params)) {
             return false;
         }
-
+        //return $this->display(__FILE__, 'views/front/simuladorBoxAdicCarrinho.tpl');
         return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorBoxAdicCarrinho.tpl');
     }
 
@@ -492,7 +492,7 @@ class fkcorreiosg2 extends CarrierModule {
         $this->compInstalados();
         $this->infConfiguracao();
 
-        $this->smarty->assign(array(
+        $this->context->smarty->assign(array(
             'fkcorreiosg2' => array(
                 'pathInclude'   => _PS_MODULE_DIR_.$this->name.'/views/config/',
                 'tabSelect'     => $this->tab_select,
@@ -2287,7 +2287,7 @@ class fkcorreiosg2 extends CarrierModule {
 
         }
 
-        $this->smarty->assign(array(
+        $this->context->smarty->assign(array(
             'fkcorreiosg2' => array(
                 'borda'             => Configuration::get('FKCORREIOSG2_BORDA'),
                 'raioBorda'         => Configuration::get('FKCORREIOSG2_RAIO_BORDA'),
@@ -2310,7 +2310,7 @@ class fkcorreiosg2 extends CarrierModule {
 
     private function gravaDadosSmartyRastreio() {
 
-        $this->smarty->assign(array(
+        $this->context->smarty->assign(array(
             'fkcorreiosg2_rastreio' => array(
                 'urlFuncoesRastreio'   => Configuration::get('FKCORREIOSG2_URL_FUNCOES_RASTREIO'),
             )
@@ -2340,7 +2340,7 @@ class fkcorreiosg2 extends CarrierModule {
             }
 
             // Retorna se for produto virtual
-            if ($params['product']->is_virtual == 1) {
+            if ($params['product']['is_virtual'] == 1) {
                 return false;
             }
         }else {
@@ -2417,7 +2417,7 @@ class fkcorreiosg2 extends CarrierModule {
         }
 
         if ($origem == 'produto') {
-            $this->gravaDadosSmartyFrete($msgStatus, $params['product']->id, $transportadoras, $lightBox);
+            $this->gravaDadosSmartyFrete($msgStatus, $params['product']['id'], $transportadoras, $lightBox);
         }else {
             $this->gravaDadosSmartyFrete($msgStatus, null, $transportadoras, false);
         }
@@ -2446,7 +2446,7 @@ class fkcorreiosg2 extends CarrierModule {
                 if ($origem == 'carrinho') {
                     // Se o cliente esta logado
                     if ($this->context->customer->isLogged()) {
-                        $cepDestino = $params['delivery']->postcode;
+                        $cepDestino = $params['delivery']['postcode'];
                     }else {
                         // Recupera CEP do cookie
                         if ($this->context->cookie->fkcorreiosg2_cep_destino) {
@@ -2496,8 +2496,8 @@ class fkcorreiosg2 extends CarrierModule {
         // Recupera valor do Pedido
         if ($origem == 'produto') {
             // Calcula valor do pedido (como esta no Detalhes do Produto e o valor do produto)
-            $preco = $params['product']->price;
-            $impostos = $params['product']->tax_rate;
+            $preco = $params['product']['price'];
+            $impostos = $params['product']['tax_rate'];
             $valorPedido = $preco * (1 + ($impostos / 100));
         }else {
             // Recupera o valor do pedido
