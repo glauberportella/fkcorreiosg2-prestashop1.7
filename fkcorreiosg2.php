@@ -18,7 +18,7 @@ class fkcorreiosg2 extends CarrierModule {
 
         $this->name     = 'fkcorreiosg2';
         $this->tab      = 'shipping_logistics';
-        $this->version  = '1.3.0';
+        $this->version  = '1.3.1';
         $this->author   = 'módulosFK';
 
         $this->bootstrap = true;
@@ -61,7 +61,7 @@ class fkcorreiosg2 extends CarrierModule {
             Or !$this->registerHook('displayRightColumnProduct')
             Or !$this->registerHook('displayProductButtons')
             Or !$this->registerHook('displayFooterProduct')
-            Or !$this->registerHook('displayShoppingCartFooter')
+            Or !$this->registerHook('displayShoppingCart')
             Or !$this->registerHook('displayLeftColumn')
             Or !$this->registerHook('displayRightColumn')
             Or !$this->registerHook('displayFooter')
@@ -224,7 +224,7 @@ class fkcorreiosg2 extends CarrierModule {
             Or !$this->unregisterHook('displayRightColumnProduct')
             Or !$this->unregisterHook('displayProductButtons')
             Or !$this->unregisterHook('displayFooterProduct')
-            Or !$this->unregisterHook('displayShoppingCartFooter')
+            Or !$this->unregisterHook('displayShoppingCart')
             Or !$this->unregisterHook('displayLeftColumn')
             Or !$this->unregisterHook('displayRightColumn')
             Or !$this->unregisterHook('displayFooter')
@@ -389,14 +389,12 @@ class fkcorreiosg2 extends CarrierModule {
 
     }
 
-    public function hookdisplayShoppingCartFooter($params) {
-
+    public function hookdisplayShoppingCart($params) {
         if (!$this->processaSimulador('carrinho', '', $params)) {
             return false;
         }
 
         return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorCarrinho.tpl');
-
     }
 
     public function hookdisplayLeftColumn($params) {
@@ -2350,7 +2348,8 @@ class fkcorreiosg2 extends CarrierModule {
             }
 
             // Retorna se o carrinho estiver vazio
-            if (!$params['products']) {
+            $products = $params['cart']->getProducts();
+            if (!count($products)) {
                 return false;
             }
 

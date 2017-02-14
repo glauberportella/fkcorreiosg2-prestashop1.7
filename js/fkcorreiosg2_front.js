@@ -44,5 +44,11 @@ $(document).ready(function(){
         }
     });
 
+    $('a#fkcorreiosg2-abrir-simulador').on('click', function(e) {
+      e.preventDefault();
+      $('#fkcorreiosg2-simulador').slideDown(600);
+      $(this).hide();
+    });
+
 });
 

@@ -5,7 +5,8 @@
 
     <div class="fkcorreiosg2-form">
         <input class="fkcorreiosg2-mask-cep fkcorreiosg2-col-lg-40" type="text" name="fkcorreiosg2_cep_adic_carrinho" id="fkcorreiosg2_cep_adic_carrinho" placeholder="Informe o CEP" value="{$fkcorreiosg2['cepCookie']}"/>
-        <a class="fkcorreiosg2-button" style="background-color: {$fkcorreiosg2['corBotao']}; color: {$fkcorreiosg2['corFonteBotao']};" id="fkcorreiosg2_link_cep_adic_carrinho" href="{$link->getPageLink('product', true)|escape:'html'}&id_product={$fkcorreiosg2['idProduto']}&origem=adicCarrinho">{l s='Calcular frete' mod='fkcorreiosg2'}</a>
+        {* href original: {$link->getPageLink('product', true)}&id_product={$fkcorreiosg2['idProduto']}&origem=adicCarrinho *}
+        <a class="fkcorreiosg2-button" style="background-color: {$fkcorreiosg2['corBotao']}; color: {$fkcorreiosg2['corFonteBotao']};" id="fkcorreiosg2_link_cep_adic_carrinho" href="{url entity='product' id=$fkcorreiosg2['idProduto'] params=['origem' => 'adicCarrinho']}">{l s='Calcular frete' mod='fkcorreiosg2'}</a>
     </div>
 
     <p class="fkcorreiosg2-faixa-msg" id="fkcorreiosg2-adic-carrinho-faixa-msg" style="background-color: {$fkcorreiosg2['corFaixaMsg']}; color: {$fkcorreiosg2['corFonteMsg']};">{$fkcorreiosg2['msgStatus']}</p>

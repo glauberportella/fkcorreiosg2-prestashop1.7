@@ -196,10 +196,21 @@
 
 #fkcorreiosg2-carrinho-nome {
     width: 60%;
-    font-size: 14px;}
+    font-size: 0.8em;}
 
 #fkcorreiosg2-carrinho-valor {
     width: 20%;
     font-size: 14px;
     text-align: right;
     padding-right: 5px;}
+
+.cart-summary-and-actions .fkcorreiosg2-box .fkcorreiosg2-button {
+    padding: 5px 15px;
+    top: 3px;
+    position: relative;
+    margin-left: 0;
+}
+
+.cart-summary-and-actions .fkcorreiosg2-box .fkcorreiosg2-mask-cep {
+    padding: 3px 15px;
+}
