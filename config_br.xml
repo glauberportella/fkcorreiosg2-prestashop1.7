@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>fkcorreiosg2</name>
+    <displayName><![CDATA[FKcorreios - PS 1.7]]></displayName>
+    <version><![CDATA[1.3.1]]></version>
+    <description><![CDATA[Oferece aos clientes diversos meios para envio dos produtos. M&oacute;dulo FKCorreios G2 portado para Prestashop 1.7.]]></description>
+    <author><![CDATA[m&oacute;dulosFK]]></author>
+    <tab><![CDATA[shipping_logistics]]></tab>
+    <is_configurable>1</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>

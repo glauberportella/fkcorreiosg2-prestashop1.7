@@ -2338,8 +2338,14 @@ class fkcorreiosg2 extends CarrierModule {
             }
 
             // Retorna se for produto virtual
-            if ($params['product']['is_virtual'] == 1) {
-                return false;
+            if (is_array($params['product'])) {
+                if ($params['product']['is_virtual'] == 1) {
+                    return false;
+                }
+            } else {
+                if ($params['product']->is_virtual == 1) {
+                    return false;
+                }
             }
         }else {
             // Retorna se nao for para mostrar no carrinho
@@ -2416,7 +2422,8 @@ class fkcorreiosg2 extends CarrierModule {
         }
 
         if ($origem == 'produto') {
-            $this->gravaDadosSmartyFrete($msgStatus, $params['product']['id'], $transportadoras, $lightBox);
+            $id_product = is_array($params['product']) ? $params['product']['id'] : $params['product']->id;
+            $this->gravaDadosSmartyFrete($msgStatus, $id_product, $transportadoras, $lightBox);
         }else {
             $this->gravaDadosSmartyFrete($msgStatus, null, $transportadoras, false);
         }
