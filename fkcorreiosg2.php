@@ -62,6 +62,7 @@ class fkcorreiosg2 extends CarrierModule {
             Or !$this->registerHook('displayProductButtons')
             Or !$this->registerHook('displayFooterProduct')
             Or !$this->registerHook('displayShoppingCart')
+            //Or !$this->registerHook('displayShoppingCartFooter')
             Or !$this->registerHook('displayLeftColumn')
             Or !$this->registerHook('displayRightColumn')
             Or !$this->registerHook('displayFooter')
@@ -225,6 +226,7 @@ class fkcorreiosg2 extends CarrierModule {
             Or !$this->unregisterHook('displayProductButtons')
             Or !$this->unregisterHook('displayFooterProduct')
             Or !$this->unregisterHook('displayShoppingCart')
+            //Or !$this->unregisterHook('displayShoppingCartFooter')
             Or !$this->unregisterHook('displayLeftColumn')
             Or !$this->unregisterHook('displayRightColumn')
             Or !$this->unregisterHook('displayFooter')
@@ -367,7 +369,8 @@ class fkcorreiosg2 extends CarrierModule {
             return false;
         }
 
-        return $this->display(__FILE__, 'views/front/simuladorAposDescResumida.tpl');
+        //return $this->display(__FILE__, 'views/front/simuladorAposDescResumida.tpl');
+        return $this->context->smarty->fetch('module:fkcorreiosg2/views/front/simuladorAposDescResumida.tpl');
     }
 
     public function hookdisplayProductButtons($params) {
@@ -2503,7 +2506,7 @@ class fkcorreiosg2 extends CarrierModule {
         if ($origem == 'produto') {
             // Calcula valor do pedido (como esta no Detalhes do Produto e o valor do produto)
             $preco = $params['product']['price'];
-            $impostos = $params['product']['tax_rate'];
+            $impostos = $params['product']['rate'];
             $valorPedido = $preco * (1 + ($impostos / 100));
         }else {
             // Recupera o valor do pedido

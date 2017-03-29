@@ -1,4 +1,20 @@
+.img-responsive {
+	max-width: 100%;
+}
 
+.fkcorreiosg2-box {
+	padding: 15px;
+}
+
+.fkcorreiosg2-faixa-msg {
+	padding: 5px 10px;
+	margin-top: 15px;
+}
+
+#fkcorreiosg2_adic_carrinho {
+	margin-top: 30px;
+}
+/*
 .fkcorreiosg2-form {
     padding: 5px 10px 5px 10px;}
 
@@ -214,3 +230,4 @@
 .cart-summary-and-actions .fkcorreiosg2-box .fkcorreiosg2-mask-cep {
     padding: 3px 15px;
 }
+*/

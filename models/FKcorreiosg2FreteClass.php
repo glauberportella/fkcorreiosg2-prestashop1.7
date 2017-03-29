@@ -91,7 +91,7 @@ class FKcorreiosg2FreteClass {
 
                 // Calcula valor do produto
                 $preco = $params['product']['price'];
-                $impostos = $params['product']['tax_rate'];
+                $impostos = $params['product']['rate'];
                 $valorProduto = $preco * (1 + ($impostos / 100));
 
                 // Recupera o peso do pedido
@@ -261,6 +261,7 @@ class FKcorreiosg2FreteClass {
                 'prazoEntrega'          => $prazoEntrega,
                 'mensagem'              => (Configuration::get('FKCORREIOSG2_MSG_CORREIOS') == 'on' ? $retorno['msgCorreios'] : ''),
                 'valorFrete'            => $valorFrete,
+                'valorFreteFmt'         => Tools::displayPrice($valorFrete),
             );
         }
 
@@ -527,6 +528,7 @@ class FKcorreiosg2FreteClass {
         $this->freteCarrier = array(
             'prazoEntrega'  => $prazoEntrega,
             'valorFrete'    => $valorFrete,
+            'valorFreteFmt' => Tools::displayPrice($valorFrete),
         );
 
         return true;

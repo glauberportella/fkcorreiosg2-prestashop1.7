@@ -28,7 +28,7 @@
                                 {$transp['prazoEntrega']}
                             </td>
                             <td id="fkcorreiosg2-desc-resumida-valor">
-                                {convertPrice price=$transp['valorFrete']}
+                                {$transp['valorFreteFmt']}
                             </td>
                         </tr>
                     {/foreach}
