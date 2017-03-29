@@ -2455,7 +2455,8 @@ class fkcorreiosg2 extends CarrierModule {
                 if ($origem == 'carrinho') {
                     // Se o cliente esta logado
                     if ($this->context->customer->isLogged()) {
-                        $cepDestino = $params['delivery']['postcode'];
+                        $delivery_address = new Address($params['cart']->id_address_delivery);
+                        $cepDestino = $delivery_address->postcode;
                     }else {
                         // Recupera CEP do cookie
                         if ($this->context->cookie->fkcorreiosg2_cep_destino) {
