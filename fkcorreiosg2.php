@@ -474,13 +474,11 @@ class fkcorreiosg2 extends CarrierModule {
     private function renderForm() {
 
         // CSS
-      	//$this->context->controller->registerStylesheet('fkcorreiosg2_admin_css', $this->_path.'css/fkcorreiosg2_admin.css');
         $this->context->controller->addCSS($this->_path.'css/fkcorreiosg2_admin.css');
 
         // JS
-        //$this->context->controller->registerJavascript('fkcorreiosg2_admin_js', $this->_path.'js/fkcorreiosg2_admin.js');
-        //$this->context->controller->registerJavascript('fkcorreiosg2_maskedinput_js', $this->_path.'js/jquery.maskedinput.js');
         $this->context->controller->addJS($this->_path.'js/fkcorreiosg2_admin.js');
+        $this->context->controller->addJS($this->_path.'js/ajaxq.js');
         $this->context->controller->addJS($this->_path.'js/jquery.maskedinput.js');
 
         $this->configGeral();
@@ -502,7 +500,6 @@ class fkcorreiosg2 extends CarrierModule {
         ));
 
         return $this->display(__FILE__, 'views/config/mainConfig.tpl');
-        //return $this->context->smarty->fetch('module:fkcorreiosg2/views/config/mainConfig.tpl');
     }
 
     private function configGeral() {

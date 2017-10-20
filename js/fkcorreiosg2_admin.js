@@ -1,4 +1,3 @@
-
 jQuery(function() {
     $('.fkcorreiosg2-mask-cep').mask('99999-999');
 });
@@ -144,91 +143,100 @@ function fkcorreiosg2Desmarcar(idClass) {
 
 function fkcorreiosg2TabOffGeral(urlImg, urlFuncoes, idEspCorreios) {
 
-    var tipo = '';
+    var tipo = [];
     var erro = false;
+      var idTabOffline = [];
+      var ajaxqIdx = 0;
+      var controle = [];
 
-    // Recupera todos objetos da classe
-    $(".fkcorreiosg2_tab_offline_" + idEspCorreios).each(function(){
-
+  // Recupera todos objetos da classe
+    $(".fkcorreiosg2_tab_offline_" + idEspCorreios).each(function(index){
         // Recupera o controle sendo executado atraves do seu id
-        var controle = $(this).attr("id").toString();
+        controle[index] = $(this).attr("id").toString();
 
         // Verifica o tipo (cidade, capital ou interior)
-        if (controle.indexOf('capital') != -1) {
-            tipo = 'capital';
+        if (controle[index].indexOf('capital') != -1) {
+            tipo[index] = 'capital';
         }else {
-            if (controle.indexOf('interior') != -1) {
-                tipo = 'interior';
+            if (controle[index].indexOf('interior') != -1) {
+                tipo[index] = 'interior';
             }else {
-                tipo = 'cidade'
+                tipo[index] = 'cidade'
             }
         }
 
         // Recupera id da tabela Tabelas Offline
-        var pos = controle.lastIndexOf('_');
+        var pos = controle[index].lastIndexOf('_');
 
         if (pos != -1) {
             // id da tabela Tabelas Offline
-            var idTabOffline = controle.substring(parseInt(pos) + 1);
-
-            // Foco no controle sendo executado
-            $("#" + controle).focus();
+          idTabOffline[index] = controle[index].substring(parseInt(pos) + 1);
 
             // Limpa o controle sendo executado
-            $("#" + controle).val("");
+            $("#" + controle[index]).val("");
 
             // Imagem Processando
-            $("#fkcorreiosg2_tab_offline_img_" + tipo + "_" + idTabOffline).attr("src", urlImg + "processando_32.gif");
-            $("#fkcorreiosg2_tab_offline_img_" + tipo + "_" + idTabOffline).css("display", "block");
+            $("#fkcorreiosg2_tab_offline_img_" + tipo[index] + "_" + idTabOffline[index]).attr("src", urlImg + "processando_32.gif");
+            $("#fkcorreiosg2_tab_offline_img_" + tipo[index] + "_" + idTabOffline[index]).css("display", "block");
+            function onDone(retorno){
 
-            // Chama funcoes.php
-            $.ajax({
-                type: "POST",
-                async: false,
-                url: urlFuncoes,
-                data: {func: "1", idEspCorreios: idEspCorreios, idTabOffline: idTabOffline, tipo: tipo}
-            }).done(function(retorno) {
+              // Foco no controle sendo executado
+              $('body, html, #content').animate({
+                scrollTop: $("#"+ controle[ajaxqIdx]).offset().top
+              }, 1000);
 
-                retorno = retorno.trim();
+              retorno = retorno.trim();
 
                 if (retorno.substr(0, 4) != "erro") {
 
-                    // Recupera prazo de entrega e tabela
-                    var pos = retorno.indexOf('|');
-                    var prazoEntrega = retorno.substring(0, pos);
-                    var tabOffline = retorno.substring(parseInt(pos) + 1);
+                  // Recupera prazo de entrega e tabela
+                  var pos = retorno.indexOf('|');
+                  var prazoEntrega = retorno.substring(0, pos);
+                  var tabOffline = retorno.substring(parseInt(pos) + 1);
 
-                    // Preenche o prazo de entrega
-                    $("#fkcorreiosg2_tab_offline_prazo_" + tipo + "_" + idTabOffline).val(prazoEntrega);
+                  // Preenche o prazo de entrega
+                  $("#fkcorreiosg2_tab_offline_prazo_" + tipo[ajaxqIdx] + "_" + idTabOffline[ajaxqIdx]).val(prazoEntrega);
 
-                    // Preenche a tabela offline
-                    $("#" + controle).val(tabOffline);
+                  // Preenche a tabela offline
+                  $("#" + controle[ajaxqIdx]).val(tabOffline);
 
-                    // Imagem ok
-                    $("#fkcorreiosg2_tab_offline_img_" + tipo + "_" + idTabOffline).attr("src", urlImg + "ok_32.png");
+                  // Imagem ok
+                  $("#fkcorreiosg2_tab_offline_img_" + tipo[ajaxqIdx] + "_" + idTabOffline[ajaxqIdx]).attr("src", urlImg + "ok_32.png");
                 }else {
-                    // Imagem erro
-                    $("#fkcorreiosg2_tab_offline_img_" + tipo + "_" + idTabOffline).attr("src", urlImg + "erro_32.png");
-                    erro = true;
+                  // Imagem erro
+                  $("#fkcorreiosg2_tab_offline_img_" + tipo[ajaxqIdx] + "_" + idTabOffline[ajaxqIdx]).attr("src", urlImg + "erro_32.png");
+                  erro |= true;
                 }
+              ajaxqIdx++;
+              }
+
+            // Chama funcoes.php
+            $.ajaxq('tabelaOffline', {
+              type: "POST",
+              url: urlFuncoes,
+              data: {func: "1", idEspCorreios: idEspCorreios, idTabOffline: idTabOffline[index], tipo: tipo[index]},
+              success: onDone
             });
         }else {
             erro = true;
         }
 
     });
+    setTimeout(function(){
+        if(!$.ajaxq.isRunning('tabelaOffline')) {
+          $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("display", "block");
 
-    $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("display", "block");
+          if (erro == false) {
+            $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("color", "green");
+            $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).html("Tabelas processadas com sucesso");
+          } else {
+            $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("color", "red");
+            $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).html("Existem tabelas com erros. Favor verificar e refazê-las");
+          }
+          $("html, body").animate({scrollTop: 0}, "slow");
+        }
+    }, 1000);
 
-    if (erro == false) {
-        $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("color","green");
-        $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).html("Tabelas processadas com sucesso");
-    }else {
-        $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).css("color","red");
-        $("#fkcorreiosg2_tab_offline_status_" + idEspCorreios).html("Existem tabelas com erros. Favor verificar e refazê-las");
-    }
-
-    $("html, body").animate({ scrollTop: 0 }, "slow");
 }
 
 function fkcorreiosg2TabOffEspecifica(controle, urlImg, urlFuncoes, idEspCorreios) {
@@ -267,7 +275,6 @@ function fkcorreiosg2TabOffEspecifica(controle, urlImg, urlFuncoes, idEspCorreio
         // Chama funcoes.php
         $.ajax({
             type: "POST",
-            async: false,
             url: urlFuncoes,
             data: {func: "1", idEspCorreios: idEspCorreios, idTabOffline: idTabOffline, tipo: tipo}
         }).done(function(retorno) {
