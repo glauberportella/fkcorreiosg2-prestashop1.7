@@ -1,7 +1,7 @@
 <?php
 
 include_once(dirname(__FILE__).'/models/CorreiosClass.php');
-include_once(dirname(__FILE__).'/models/FKCorreiosg2Class.php');
+include_once(dirname(__FILE__).'/models/FKcorreiosg2Class.php');
 
 if (isset($_REQUEST['func'])) {
 
